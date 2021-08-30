@@ -6,7 +6,7 @@
     <data>
         <variable
             name="viewModel"
-            type="com.example.melichallenge.search.SearchViewModel" />
+            type="com.example.melichallenge.search.presentation.SearchViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
