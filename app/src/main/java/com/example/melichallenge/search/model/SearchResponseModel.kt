@@ -1,6 +1,7 @@
 package com.example.melichallenge.search.model
 
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
 data class SearchResponseModel(
     @SerializedName("site_id") val siteId: String,
@@ -13,7 +14,7 @@ data class SearchResult(
     val productId: String,
     val title: String,
     val price: Float
-)
+): Serializable
 
 data class SearchResponsePaging(
     val total: Int,

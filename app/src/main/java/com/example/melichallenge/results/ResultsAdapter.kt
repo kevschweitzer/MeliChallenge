@@ -9,7 +9,7 @@ import com.example.melichallenge.databinding.ItemResultBinding
 import com.example.melichallenge.search.model.SearchResult
 
 interface ResultsClickListener {
-    fun onItemClicked(productId: String)
+    fun onItemClicked(product: SearchResult)
 }
 
 class ResultsAdapter(

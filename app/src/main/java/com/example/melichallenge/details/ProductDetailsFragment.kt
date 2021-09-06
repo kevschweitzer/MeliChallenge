@@ -15,17 +15,13 @@ import org.koin.core.parameter.parametersOf
 class ProductDetailsFragment : Fragment() {
 
     private val args: ProductDetailsFragmentArgs by navArgs()
-    private val viewModel: DetailsViewModel by inject { parametersOf(args.productId) }
+    private val viewModel: DetailsViewModel by inject { parametersOf(args.product) }
     private var _binding: FragmentProductDetailsBinding? = null
     private val binding get() = _binding!!
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = DataBindingUtil.inflate(inflater, R.layout.fragment_product_details, container, false)
-        observeState()
+        binding.viewModel = viewModel
         return binding.root
-    }
-
-    private fun observeState() {
-        binding.text.text = viewModel.productId.toString()
     }
 }

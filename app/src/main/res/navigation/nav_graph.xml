@@ -29,8 +29,7 @@
         android:label="fragment_product_details"
         tools:layout="@layout/fragment_product_details" >
         <argument
-            android:name="productId"
-            app:argType="string"
-            android:defaultValue="" />
+            android:name="product"
+            app:argType="com.example.melichallenge.search.model.SearchResult" />
     </fragment>
 </navigation>

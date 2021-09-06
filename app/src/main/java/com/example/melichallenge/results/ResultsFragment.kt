@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.melichallenge.R
 import com.example.melichallenge.databinding.FragmentResultsBinding
 import com.example.melichallenge.di.SHARED_SCOPE_SEARCH_ID
+import com.example.melichallenge.search.model.SearchResult
 import com.example.melichallenge.search.presentation.SearchViewModel
 import org.koin.core.context.GlobalContext
 import org.koin.core.scope.Scope
@@ -46,8 +47,8 @@ class ResultsFragment : Fragment(), ResultsClickListener {
         }
     }
 
-    override fun onItemClicked(productId: String) {
-        val action = ResultsFragmentDirections.actionResultsFragmentToProductDetailsFragment(productId)
+    override fun onItemClicked(product: SearchResult) {
+        val action = ResultsFragmentDirections.actionResultsFragmentToProductDetailsFragment(product)
         findNavController().navigate(action)
     }
 }
