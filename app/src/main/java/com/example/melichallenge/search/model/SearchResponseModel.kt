@@ -10,6 +10,7 @@ data class SearchResponseModel(
 )
 
 data class SearchResult(
+    val productId: String,
     val title: String,
     val price: Float
 )

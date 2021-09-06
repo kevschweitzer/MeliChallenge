@@ -18,5 +18,19 @@
         android:id="@+id/resultsFragment"
         android:name="com.example.melichallenge.results.ResultsFragment"
         android:label="fragment_results"
-        tools:layout="@layout/fragment_results" />
+        tools:layout="@layout/fragment_results" >
+        <action
+            android:id="@+id/action_resultsFragment_to_productDetailsFragment"
+            app:destination="@id/productDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/productDetailsFragment"
+        android:name="com.example.melichallenge.details.ProductDetailsFragment"
+        android:label="fragment_product_details"
+        tools:layout="@layout/fragment_product_details" >
+        <argument
+            android:name="productId"
+            app:argType="string"
+            android:defaultValue="" />
+    </fragment>
 </navigation>

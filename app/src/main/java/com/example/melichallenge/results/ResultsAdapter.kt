@@ -8,7 +8,13 @@ import com.example.melichallenge.R
 import com.example.melichallenge.databinding.ItemResultBinding
 import com.example.melichallenge.search.model.SearchResult
 
-class ResultsAdapter: RecyclerView.Adapter<ResultsAdapter.ResultViewHolder>() {
+interface ResultsClickListener {
+    fun onItemClicked(productId: String)
+}
+
+class ResultsAdapter(
+    private val clickListener: ResultsClickListener
+): RecyclerView.Adapter<ResultsAdapter.ResultViewHolder>() {
 
     private var resultsList = mutableListOf<SearchResult>()
     private var _binding: ItemResultBinding? = null
@@ -17,7 +23,7 @@ class ResultsAdapter: RecyclerView.Adapter<ResultsAdapter.ResultViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ResultViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         _binding = DataBindingUtil.inflate(inflater, R.layout.item_result, parent, false)
-        return ResultViewHolder(binding)
+        return ResultViewHolder(binding, clickListener)
     }
 
     override fun onBindViewHolder(holder: ResultViewHolder, position: Int) {
@@ -32,10 +38,14 @@ class ResultsAdapter: RecyclerView.Adapter<ResultsAdapter.ResultViewHolder>() {
         notifyDataSetChanged()
     }
 
-    class ResultViewHolder(private val binding: ItemResultBinding): RecyclerView.ViewHolder(binding.root) {
+    class ResultViewHolder(
+        private val binding: ItemResultBinding,
+        private val clickListener: ResultsClickListener
+    ): RecyclerView.ViewHolder(binding.root) {
 
         fun bind(item: SearchResult) {
             binding.result = item
+            binding.listener = clickListener
         }
     }
 }

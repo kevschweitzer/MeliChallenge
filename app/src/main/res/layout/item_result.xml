@@ -7,12 +7,17 @@
         <variable
             name="result"
             type="com.example.melichallenge.search.model.SearchResult" />
+
+        <variable
+            name="listener"
+            type="com.example.melichallenge.results.ResultsClickListener" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="16dp">
+        android:padding="16dp"
+        android:onClick="@{() -> listener.onItemClicked(result.productId)}">
 
         <TextView
             android:layout_width="wrap_content"
