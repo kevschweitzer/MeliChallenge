@@ -1,4 +1,4 @@
-package com.example.melichallenge.search.presentation
+package com.example.melichallenge.search
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -11,7 +11,7 @@ import kotlinx.coroutines.launch
 abstract class SearchViewModel: ViewModel() {
     abstract var searchText: String
     abstract var searchResult: LiveData<List<SearchResult>>
-    abstract fun search()
+    abstract fun search(query: String)
 }
 
 class SearchViewModelImpl(
@@ -22,9 +22,9 @@ class SearchViewModelImpl(
     private val _searchResult = MutableLiveData<List<SearchResult>>()
     override var searchResult: LiveData<List<SearchResult>> = _searchResult
 
-    override fun search() {
+    override fun search(query: String) {
         viewModelScope.launch {
-            _searchResult.value = searchRepository.searchByKeyword(searchText).results
+            _searchResult.value = searchRepository.searchByKeyword(query).results
         }
     }
 }

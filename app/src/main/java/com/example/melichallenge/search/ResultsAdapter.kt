@@ -1,4 +1,4 @@
-package com.example.melichallenge.results
+package com.example.melichallenge.search
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

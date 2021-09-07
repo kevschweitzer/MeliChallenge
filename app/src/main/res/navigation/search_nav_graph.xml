@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/search_nav_graph"
+    app:startDestination="@id/resultsFragment">
+    <fragment
+        android:id="@+id/resultsFragment"
+        android:name="com.example.melichallenge.search.SearchFragment"
+        tools:layout="@layout/fragment_search"
+        android:label="fragment_results">
+        <action
+            android:id="@+id/action_resultsFragment_to_productDetailsFragment"
+            app:destination="@id/productDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/productDetailsFragment"
+        android:name="com.example.melichallenge.details.ProductDetailsFragment"
+        tools:layout="@layout/fragment_product_details"
+        android:label="fragment_product_details">
+        <argument
+            android:name="product"
+            app:argType="com.example.melichallenge.search.model.SearchResult" />
+    </fragment>
+    <action
+        android:id="@+id/action_resultsFragment_to_productDetailsFragment"
+        app:destination="@id/productDetailsFragment" />
+</navigation>

@@ -10,7 +10,7 @@
 
         <variable
             name="listener"
-            type="com.example.melichallenge.results.ResultsClickListener" />
+            type="com.example.melichallenge.search.ResultsClickListener" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
