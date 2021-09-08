@@ -8,6 +8,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
@@ -16,6 +18,11 @@ import com.example.melichallenge.R
 import com.example.melichallenge.databinding.FragmentSearchBinding
 import com.example.melichallenge.search.model.SearchResult
 import org.koin.android.ext.android.inject
+
+enum class SortFilters {
+    LOWER_PRICE,
+    HIGHER_PRICE
+}
 
 class SearchFragment : Fragment(), ResultsClickListener {
 
@@ -29,9 +36,28 @@ class SearchFragment : Fragment(), ResultsClickListener {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         _binding = DataBindingUtil.inflate(inflater, R.layout.fragment_search, container, false)
         setupSearchView()
+        setupFilters()
         observeState()
         getSearchQuery()
         return binding.root
+    }
+
+    private fun setupFilters() {
+        binding.filter.setOnClickListener {
+            binding.filterContainer.visibility = when(binding.filterContainer.visibility) {
+                View.VISIBLE -> View.GONE
+                else -> View.VISIBLE
+            }
+        }
+        binding.sortSpinner.apply {
+            adapter = ArrayAdapter.createFromResource(context, R.array.sort_options, R.layout.support_simple_spinner_dropdown_item)
+            onItemSelectedListener = object: AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(p0: AdapterView<*>?, p1: View?, position: Int, p3: Long) {
+                    viewModel.setSelectedOrderPosition(position)
+                }
+                override fun onNothingSelected(p0: AdapterView<*>?) {}
+            }
+        }
     }
 
     private fun setupSearchView() {

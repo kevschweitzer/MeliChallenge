@@ -11,6 +11,7 @@ import kotlinx.coroutines.launch
 abstract class SearchViewModel: ViewModel() {
     abstract var searchResult: LiveData<List<SearchResult>>
     abstract fun search(query: String)
+    abstract fun setSelectedOrderPosition(position: Int)
 }
 
 class SearchViewModelImpl(
@@ -23,6 +24,13 @@ class SearchViewModelImpl(
     override fun search(query: String) {
         viewModelScope.launch {
             _searchResult.value = searchRepository.searchByKeyword(query).results
+        }
+    }
+
+    override fun setSelectedOrderPosition(position: Int) {
+        _searchResult.value = when(position) {
+            SortFilters.HIGHER_PRICE.ordinal -> _searchResult.value?.sortedByDescending{ it.price }
+            else -> _searchResult.value?.sortedBy{ it.price }
         }
     }
 }
