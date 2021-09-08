@@ -30,7 +30,7 @@
         android:id="@+id/filter_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="@dimen/medium_margin"
+        android:layout_marginTop="@dimen/small_margin"
         android:visibility="gone"
         app:layout_constraintTop_toBottomOf="@id/search_view" >
 
