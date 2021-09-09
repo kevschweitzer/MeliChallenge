@@ -29,31 +29,31 @@ class SearchFragment : Fragment(), ResultsClickListener {
     private var _binding: FragmentSearchBinding? = null
     private val binding get() = _binding!!
     private val resultsAdapter = ResultsAdapter(this)
-
     private val viewModel: SearchViewModel by inject()
-
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         _binding = DataBindingUtil.inflate(inflater, R.layout.fragment_search, container, false)
+        binding.viewModel = viewModel
+        binding.lifecycleOwner = viewLifecycleOwner
         setupSearchView()
         setupFilters()
         observeState()
         getSearchQuery()
+        viewModel.restoreState(savedInstanceState)
         return binding.root
     }
 
+    override fun onSaveInstanceState(outState: Bundle) {
+        val savedState = viewModel.saveState(outState)
+        super.onSaveInstanceState(savedState)
+    }
+
     private fun setupFilters() {
-        binding.filter.setOnClickListener {
-            binding.filterContainer.visibility = when(binding.filterContainer.visibility) {
-                View.VISIBLE -> View.GONE
-                else -> View.VISIBLE
-            }
-        }
         binding.sortSpinner.apply {
             adapter = ArrayAdapter.createFromResource(context, R.array.sort_options, R.layout.support_simple_spinner_dropdown_item)
             onItemSelectedListener = object: AdapterView.OnItemSelectedListener {
                 override fun onItemSelected(p0: AdapterView<*>?, p1: View?, position: Int, p3: Long) {
-                    viewModel.setSelectedOrderPosition(position)
+                    viewModel.setSelectedSort(position)
                 }
                 override fun onNothingSelected(p0: AdapterView<*>?) {}
             }
@@ -85,6 +85,17 @@ class SearchFragment : Fragment(), ResultsClickListener {
     }
 
     private fun observeState() {
+        observeResults()
+        observeSelectedSort()
+    }
+
+    private fun observeSelectedSort() {
+        viewModel.selectedSort.observe(viewLifecycleOwner) {
+            binding.sortSpinner.setSelection(it.ordinal,false)
+        }
+    }
+
+    private fun observeResults() {
         viewModel.searchResult.observe(viewLifecycleOwner) {
             resultsAdapter.setResults(it)
         }
