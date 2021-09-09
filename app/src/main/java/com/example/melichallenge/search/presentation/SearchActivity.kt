@@ -1,4 +1,4 @@
-package com.example.melichallenge.search
+package com.example.melichallenge.search.presentation
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle

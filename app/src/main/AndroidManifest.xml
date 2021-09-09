@@ -13,7 +13,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MeliChallenge">
         <activity
-            android:name=".search.SearchActivity"
+            android:name=".search.presentation.SearchActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH" />

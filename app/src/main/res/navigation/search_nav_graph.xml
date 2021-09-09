@@ -6,7 +6,7 @@
     app:startDestination="@id/resultsFragment">
     <fragment
         android:id="@+id/resultsFragment"
-        android:name="com.example.melichallenge.search.SearchFragment"
+        android:name="com.example.melichallenge.search.presentation.SearchFragment"
         tools:layout="@layout/fragment_search"
         android:label="fragment_results">
         <action

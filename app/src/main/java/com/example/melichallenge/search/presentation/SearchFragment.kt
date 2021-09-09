@@ -1,4 +1,4 @@
-package com.example.melichallenge.search
+package com.example.melichallenge.search.presentation
 
 import android.app.SearchManager
 import android.content.ComponentName

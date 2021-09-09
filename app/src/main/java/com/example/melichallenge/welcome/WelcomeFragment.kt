@@ -9,7 +9,7 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import com.example.melichallenge.R
-import com.example.melichallenge.search.SearchActivity
+import com.example.melichallenge.search.presentation.SearchActivity
 import com.example.melichallenge.databinding.FragmentWelcomeBinding
 
 class WelcomeFragment : Fragment() {
