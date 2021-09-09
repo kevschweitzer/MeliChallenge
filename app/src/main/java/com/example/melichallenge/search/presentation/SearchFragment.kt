@@ -28,7 +28,7 @@ class SearchFragment : Fragment(), ResultsClickListener {
 
     private var _binding: FragmentSearchBinding? = null
     private val binding get() = _binding!!
-    private val resultsAdapter = ResultsAdapter(this)
+    private val resultsAdapter by lazy { ResultsAdapter(requireContext(),this) }
     private val viewModel: SearchViewModel by inject()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {

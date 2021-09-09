@@ -5,12 +5,14 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/design_default_color_primary">
 
         <EditText
             android:id="@+id/search_edit_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            style="@style/PrimaryEditText"
             app:layout_constraintVertical_chainStyle="packed"
             android:layout_marginHorizontal="@dimen/default_horizontal_margin"
             android:hint="@string/query_hint"
@@ -23,6 +25,7 @@
             android:id="@+id/search_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            style="@style/PrimaryButton"
             android:layout_marginHorizontal="@dimen/default_horizontal_margin"
             android:text="@string/search_text"
             app:layout_constraintTop_toBottomOf="@id/search_edit_text"

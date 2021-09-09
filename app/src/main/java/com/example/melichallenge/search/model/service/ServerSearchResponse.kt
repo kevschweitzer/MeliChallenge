@@ -22,9 +22,10 @@ data class ServerSearchResponse(
 data class ServerSearchResult(
     @SerializedName("id") val productId: String,
     val title: String,
-    val price: Float
+    val price: Float,
+    val thumbnail: String
 ) {
-    fun toSearchResult() = SearchResult(productId, title, price)
+    fun toSearchResult() = SearchResult(productId, title, price, thumbnail)
 }
 
 data class ServerSearchResponsePaging(

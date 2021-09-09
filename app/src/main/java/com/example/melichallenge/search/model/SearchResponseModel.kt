@@ -12,8 +12,11 @@ data class SearchResponseModel(
 data class SearchResult(
     val productId: String,
     val title: String,
-    val price: Float
-): Serializable
+    val price: Float,
+    private val thumbnail: String
+): Serializable {
+    val thumbnailUrl: String get() = thumbnail.replace("http://", "https://")
+}
 
 data class SearchResponsePaging(
     val total: Int,

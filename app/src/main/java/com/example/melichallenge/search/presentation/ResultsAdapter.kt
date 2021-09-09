@@ -1,5 +1,6 @@
 package com.example.melichallenge.search.presentation
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
@@ -7,12 +8,14 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.melichallenge.R
 import com.example.melichallenge.databinding.ItemResultBinding
 import com.example.melichallenge.search.model.SearchResult
+import com.squareup.picasso.Picasso
 
 interface ResultsClickListener {
     fun onItemClicked(product: SearchResult)
 }
 
 class ResultsAdapter(
+    private val context: Context,
     private val clickListener: ResultsClickListener
 ): RecyclerView.Adapter<ResultsAdapter.ResultViewHolder>() {
 
@@ -23,7 +26,7 @@ class ResultsAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ResultViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         _binding = DataBindingUtil.inflate(inflater, R.layout.item_result, parent, false)
-        return ResultViewHolder(binding, clickListener)
+        return ResultViewHolder(context, binding, clickListener)
     }
 
     override fun onBindViewHolder(holder: ResultViewHolder, position: Int) {
@@ -39,6 +42,7 @@ class ResultsAdapter(
     }
 
     class ResultViewHolder(
+        private val context: Context,
         private val binding: ItemResultBinding,
         private val clickListener: ResultsClickListener
     ): RecyclerView.ViewHolder(binding.root) {
@@ -46,6 +50,11 @@ class ResultsAdapter(
         fun bind(item: SearchResult) {
             binding.result = item
             binding.listener = clickListener
+            setThumbnail(item)
+        }
+
+        private fun setThumbnail(item: SearchResult) {
+            Picasso.get().load(item.thumbnailUrl).into(binding.thumbnail);
         }
     }
 }

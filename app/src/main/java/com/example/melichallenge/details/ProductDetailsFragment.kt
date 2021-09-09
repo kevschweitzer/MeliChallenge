@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.navArgs
 import com.example.melichallenge.R
 import com.example.melichallenge.databinding.FragmentProductDetailsBinding
+import com.squareup.picasso.Picasso
 import org.koin.android.ext.android.inject
 import org.koin.core.parameter.parametersOf
 
@@ -22,6 +23,11 @@ class ProductDetailsFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = DataBindingUtil.inflate(inflater, R.layout.fragment_product_details, container, false)
         binding.viewModel = viewModel
+        loadThumbnail()
         return binding.root
+    }
+
+    private fun loadThumbnail() {
+        Picasso.get().load(viewModel.product.thumbnailUrl).into(binding.thumbnail)
     }
 }
