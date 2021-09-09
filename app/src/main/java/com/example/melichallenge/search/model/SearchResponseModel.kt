@@ -1,10 +1,9 @@
 package com.example.melichallenge.search.model
 
-import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
 data class SearchResponseModel(
-    @SerializedName("site_id") val siteId: String,
+    val siteId: String,
     val query: String,
     val paging: SearchResponsePaging,
     val results: List<SearchResult>
@@ -20,5 +19,5 @@ data class SearchResponsePaging(
     val total: Int,
     val offset: Int,
     val limit: Int,
-    @SerializedName("primary_results") var primaryResults: Int
+    var primaryResults: Int
 )
