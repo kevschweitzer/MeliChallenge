@@ -1,5 +1,7 @@
 package com.example.melichallenge.search.model.service
 
+import com.example.melichallenge.search.model.FilterValue
+import com.example.melichallenge.search.model.ResultFilter
 import com.example.melichallenge.search.model.SearchResponseModel
 import com.example.melichallenge.search.model.SearchResponsePaging
 import com.example.melichallenge.search.model.SearchResult
@@ -9,13 +11,15 @@ data class ServerSearchResponse(
     @SerializedName("site_id") val siteId: String,
     val query: String,
     val paging: ServerSearchResponsePaging,
-    val results: List<ServerSearchResult>
+    val results: List<ServerSearchResult>,
+    @SerializedName("available_filters") val availableFilters: List<ServerResultFilter>
 ) {
     fun toSearchResponseModel() = SearchResponseModel(
         siteId,
         query,
         paging.toSearchResponsePaging(),
-        results.map { it.toSearchResult() }
+        results.map { it.toSearchResult() },
+        availableFilters.find { it.id == "price" }?.toResultFilter()
     )
 }
 
@@ -36,5 +40,31 @@ data class ServerSearchResponsePaging(
 ) {
     fun toSearchResponsePaging() = SearchResponsePaging(
         total, offset, limit, primaryResults
+    )
+}
+
+data class ServerResultFilter(
+    val id: String,
+    val name: String,
+    val type: String,
+    val values: List<ServerFilterValue>
+) {
+    fun toResultFilter() = ResultFilter(
+        id,
+        name,
+        type,
+        values.map { it.toFilterValue() }
+    )
+}
+
+data class ServerFilterValue(
+    val id: String,
+    val name: String,
+    val results: Int
+) {
+    fun toFilterValue() = FilterValue(
+        id,
+        name,
+        results
     )
 }

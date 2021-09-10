@@ -1,6 +1,5 @@
 package com.example.melichallenge.search.presentation
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
@@ -15,7 +14,6 @@ interface ResultsClickListener {
 }
 
 class ResultsAdapter(
-    private val context: Context,
     private val clickListener: ResultsClickListener
 ): RecyclerView.Adapter<ResultsAdapter.ResultViewHolder>() {
 
@@ -26,7 +24,7 @@ class ResultsAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ResultViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         _binding = DataBindingUtil.inflate(inflater, R.layout.item_result, parent, false)
-        return ResultViewHolder(context, binding, clickListener)
+        return ResultViewHolder(binding, clickListener)
     }
 
     override fun onBindViewHolder(holder: ResultViewHolder, position: Int) {
@@ -42,7 +40,6 @@ class ResultsAdapter(
     }
 
     class ResultViewHolder(
-        private val context: Context,
         private val binding: ItemResultBinding,
         private val clickListener: ResultsClickListener
     ): RecyclerView.ViewHolder(binding.root) {

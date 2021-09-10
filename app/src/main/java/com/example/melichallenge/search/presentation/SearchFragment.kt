@@ -16,6 +16,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.melichallenge.R
 import com.example.melichallenge.databinding.FragmentSearchBinding
+import com.example.melichallenge.search.model.SearchResponseModel
 import com.example.melichallenge.search.model.SearchResult
 import org.koin.android.ext.android.inject
 
@@ -28,7 +29,7 @@ class SearchFragment : Fragment(), ResultsClickListener {
 
     private var _binding: FragmentSearchBinding? = null
     private val binding get() = _binding!!
-    private val resultsAdapter by lazy { ResultsAdapter(requireContext(),this) }
+    private val resultsAdapter = ResultsAdapter(this)
     private val viewModel: SearchViewModel by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -93,8 +94,15 @@ class SearchFragment : Fragment(), ResultsClickListener {
     }
 
     private fun observeState() {
+        observeSearchResult()
         observeResults()
         observeSelectedSort()
+    }
+
+    private fun observeResults() {
+        viewModel.results.observe(viewLifecycleOwner) {
+            resultsAdapter.setResults(it)
+        }
     }
 
     private fun observeSelectedSort() {
@@ -103,9 +111,26 @@ class SearchFragment : Fragment(), ResultsClickListener {
         }
     }
 
-    private fun observeResults() {
+    private fun observeSearchResult() {
         viewModel.searchResult.observe(viewLifecycleOwner) {
-            resultsAdapter.setResults(it)
+            setPriceFilter(it)
+        }
+    }
+
+    private fun setPriceFilter(searchResponse: SearchResponseModel) {
+        if(searchResponse.priceFilter != null) {
+            binding.priceFilterSpinner.apply {
+                adapter = ArrayAdapter(context, R.layout.support_simple_spinner_dropdown_item, searchResponse.priceFilter.values.map { it.name })
+                onItemSelectedListener = object: AdapterView.OnItemSelectedListener {
+                    override fun onItemSelected(p0: AdapterView<*>?, p1: View?, position: Int, p3: Long) {
+                        viewModel.filterBy(position)
+                    }
+
+                    override fun onNothingSelected(p0: AdapterView<*>?) {}
+                }
+            }
+        } else {
+            binding.priceFilterSpinner.visibility = View.GONE
         }
     }
 

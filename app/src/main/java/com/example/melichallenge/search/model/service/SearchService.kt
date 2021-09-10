@@ -7,6 +7,7 @@ interface SearchService {
 
     @GET("MLA/search")
     suspend fun searchByKeyword(
-        @Query("q") keyword: String
+        @Query("q") keyword: String,
+        @Query("price") priceFilterValue: String
     ): ServerSearchResponse
 }

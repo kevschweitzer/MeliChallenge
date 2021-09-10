@@ -5,6 +5,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.melichallenge.search.model.FilterValue
+import com.example.melichallenge.search.model.SearchResponseModel
 import com.example.melichallenge.search.model.SearchResult
 import com.example.melichallenge.search.model.repository.SearchRepository
 import kotlinx.coroutines.launch
@@ -12,13 +14,19 @@ import kotlinx.coroutines.launch
 abstract class SearchViewModel: ViewModel() {
     abstract val filtersVisibility: LiveData<Boolean>
     abstract val selectedSort: LiveData<SortFilters>
-    abstract val searchResult: LiveData<List<SearchResult>>
+    abstract val searchResult: LiveData<SearchResponseModel>
+    abstract val results: LiveData<List<SearchResult>>
     abstract fun search(query: String)
     abstract fun setSelectedSort(position: Int)
     abstract fun onToggleFilterClicked()
     abstract fun restoreState(savedInstanceState: Bundle?)
     abstract fun saveState(outState: Bundle): Bundle
+    abstract fun filterBy(position: Int)
 }
+
+data class FilterOptions(
+    var priceFilterValue: String = ""
+)
 
 class SearchViewModelImpl(
     private val searchRepository: SearchRepository
@@ -29,8 +37,11 @@ class SearchViewModelImpl(
         private const val SORT_SELECTION_KEY = "sort_selection"
     }
 
-    private val _searchResult = MutableLiveData<List<SearchResult>>()
-    override val searchResult: LiveData<List<SearchResult>> = _searchResult
+    private val _searchResult = MutableLiveData<SearchResponseModel>()
+    override val searchResult: LiveData<SearchResponseModel> = _searchResult
+
+    private val _results = MutableLiveData<List<SearchResult>>()
+    override val results: LiveData<List<SearchResult>> = _results
 
     private var _selectedSort = MutableLiveData(SortFilters.LOWER_PRICE)
     override val selectedSort: LiveData<SortFilters> get() = _selectedSort
@@ -38,9 +49,17 @@ class SearchViewModelImpl(
     private var _filtersVisibility = MutableLiveData(false)
     override val filtersVisibility: LiveData<Boolean> get() = _filtersVisibility
 
+    private val filterOptions = FilterOptions()
+    private var query: String = ""
+
     override fun search(query: String) {
+        this.query = query
         viewModelScope.launch {
-            _searchResult.value = sort(searchRepository.searchByKeyword(query).results)
+            val searchResult = searchRepository.searchByKeyword(query, filterOptions).apply {
+                priceFilter?.values = listOf(FilterValue("", "Todos", 0)) + priceFilter!!.values
+            }
+            _searchResult.value = searchResult
+            _results.value = searchResult.results
         }
     }
 
@@ -57,8 +76,8 @@ class SearchViewModelImpl(
     }
 
     private fun refreshResults() {
-        _searchResult.value?.let {
-            _searchResult.value = sort(it)
+        _results.value?.let {
+            _results.value = sort(it)
         }
     }
 
@@ -80,6 +99,13 @@ class SearchViewModelImpl(
         return outState.apply {
             putBoolean(FILTER_VISIBILITY_KEY, _filtersVisibility.value?: false)
             putInt(SORT_SELECTION_KEY, _selectedSort.value?.ordinal ?: 0)
+        }
+    }
+
+    override fun filterBy(position: Int) {
+        filterOptions.priceFilterValue =_searchResult.value?.priceFilter?.values?.get(position)?.id ?: ""
+        viewModelScope.launch {
+            _results.value = sort(searchRepository.searchByKeyword(query, filterOptions).results)
         }
     }
 }
