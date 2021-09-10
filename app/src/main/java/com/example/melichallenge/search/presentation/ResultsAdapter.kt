@@ -6,7 +6,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.melichallenge.R
 import com.example.melichallenge.databinding.ItemResultBinding
-import com.example.melichallenge.search.model.SearchResult
+import com.example.melichallenge.search.model.entities.SearchResult
 import com.squareup.picasso.Picasso
 
 interface ResultsClickListener {

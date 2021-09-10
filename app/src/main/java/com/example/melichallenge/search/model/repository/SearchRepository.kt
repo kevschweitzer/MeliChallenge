@@ -1,8 +1,8 @@
 package com.example.melichallenge.search.model.repository
 
-import com.example.melichallenge.search.model.SearchResponseModel
+import com.example.melichallenge.search.model.entities.FilterOptions
+import com.example.melichallenge.search.model.entities.SearchResponseModel
 import com.example.melichallenge.search.model.service.SearchService
-import com.example.melichallenge.search.presentation.FilterOptions
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 

@@ -6,7 +6,7 @@
     <data>
         <variable
             name="result"
-            type="com.example.melichallenge.search.model.SearchResult" />
+            type="com.example.melichallenge.search.model.entities.SearchResult" />
 
         <variable
             name="listener"

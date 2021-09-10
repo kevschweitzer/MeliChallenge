@@ -1,11 +1,11 @@
 package com.example.melichallenge.search.model.service
 
-import com.example.melichallenge.search.model.FilterValue
-import com.example.melichallenge.search.model.ResultFilter
-import com.example.melichallenge.search.model.SearchResponseModel
-import com.example.melichallenge.search.model.SearchResponsePaging
-import com.example.melichallenge.search.model.SearchResult
-import com.example.melichallenge.search.model.SortOption
+import com.example.melichallenge.search.model.entities.FilterValue
+import com.example.melichallenge.search.model.entities.ResultFilter
+import com.example.melichallenge.search.model.entities.SearchResponseModel
+import com.example.melichallenge.search.model.entities.SearchResponsePaging
+import com.example.melichallenge.search.model.entities.SearchResult
+import com.example.melichallenge.search.model.entities.SortOption
 import com.google.gson.annotations.SerializedName
 
 data class ServerSearchResponse(

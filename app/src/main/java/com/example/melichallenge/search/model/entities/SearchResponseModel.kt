@@ -1,4 +1,4 @@
-package com.example.melichallenge.search.model
+package com.example.melichallenge.search.model.entities
 
 import java.io.Serializable
 

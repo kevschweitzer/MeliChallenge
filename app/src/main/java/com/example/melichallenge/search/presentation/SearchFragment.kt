@@ -16,7 +16,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.melichallenge.R
 import com.example.melichallenge.databinding.FragmentSearchBinding
-import com.example.melichallenge.search.model.SearchResult
+import com.example.melichallenge.search.model.entities.SearchResult
 import org.koin.android.ext.android.inject
 
 class SearchFragment : Fragment(), ResultsClickListener {
@@ -28,8 +28,8 @@ class SearchFragment : Fragment(), ResultsClickListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        getSearchQuery()
         viewModel.restoreState(savedInstanceState)
+        getSearchQuery()
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
