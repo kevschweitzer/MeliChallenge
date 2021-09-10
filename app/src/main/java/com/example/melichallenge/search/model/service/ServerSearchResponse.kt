@@ -32,9 +32,12 @@ data class ServerSearchResult(
     @SerializedName("id") val productId: String,
     val title: String,
     val price: Float,
-    val thumbnail: String
+    val thumbnail: String,
+    @SerializedName("avaiable_quantity") val availableQuantity: Int,
+    @SerializedName("sold_quantity") val soldQuantity: Int,
+    @SerializedName("accepts_mercadopago") val acceptMercadopago: Boolean
 ) {
-    fun toSearchResult() = SearchResult(productId, title, price, thumbnail)
+    fun toSearchResult() = SearchResult(productId, title, price, thumbnail, availableQuantity, soldQuantity, acceptMercadopago)
 }
 
 data class ServerSearchResponsePaging(

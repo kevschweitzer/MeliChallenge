@@ -5,4 +5,9 @@
     <string name="search_text">Buscar</string>
     <string name="sort_by_text">Ordenar por</string>
     <string name="price_range_filter_text">Rango de precio</string>
+    <string name="accepts_mercadopago_text">Acepta Mercadopago</string>
+    <string name="sold_quantity_text">Cantidad Vendida: %1$s</string>
+    <string name="available_quantity_text">Cantidad Disponible: %1$s</string>
+    <string name="price_text">$ %1$s</string>
+
 </resources>

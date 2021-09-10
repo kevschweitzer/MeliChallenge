@@ -16,7 +16,10 @@ data class SearchResult(
     val productId: String,
     val title: String,
     val price: Float,
-    private val thumbnail: String
+    private val thumbnail: String,
+    val availableQuantity: Int,
+    val soldQuantity: Int,
+    val acceptsMercadopago: Boolean
 ): Serializable {
     val thumbnailUrl: String get() = thumbnail.replace("http://", "https://")
 }

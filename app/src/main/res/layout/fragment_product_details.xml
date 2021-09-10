@@ -7,6 +7,7 @@
         <variable
             name="viewModel"
             type="com.example.melichallenge.details.DetailsViewModel" />
+        <import type="android.view.View"/>
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -49,13 +50,35 @@
             android:layout_height="wrap_content"
             style="@style/DetailsPrice"
             android:layout_marginTop="@dimen/medium_margin"
-            android:text="@{`$ ` + viewModel.product.price}"
+            android:text="@{@string/price_text(viewModel.product.price)}"
             app:layout_constraintTop_toBottomOf="@id/product_title"
             app:layout_constraintEnd_toEndOf="@id/product_title"
             app:layout_constraintStart_toStartOf="@id/product_title"
             tools:text="Product name"/>
 
+        <TextView
+            android:id="@+id/sold_quantity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{ @string/sold_quantity_text(viewModel.product.soldQuantity)}"
+            app:layout_constraintTop_toBottomOf="@id/thumbnail"
+            app:layout_constraintStart_toStartOf="parent"/>
 
+        <TextView
+            android:id="@+id/available_quantity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{@string/available_quantity_text(viewModel.product.availableQuantity)}"
+            app:layout_constraintTop_toBottomOf="@id/sold_quantity"
+            app:layout_constraintStart_toStartOf="parent"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/accepts_mercadopago_text"
+            android:visibility="@{viewModel.product.acceptsMercadopago ? View.VISIBLE : View.GONE}"
+            app:layout_constraintTop_toBottomOf="@id/available_quantity"
+            app:layout_constraintStart_toStartOf="parent"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
