@@ -3,9 +3,4 @@
     <string name="search_fragment_label">Buscar</string>
     <string name="query_hint">¿Qué estás buscando?</string>
     <string name="search_text">Buscar</string>
-
-    <string-array name="sort_options">
-        <item>Menor precio</item>
-        <item>Mayor precio</item>
-    </string-array>
 </resources>

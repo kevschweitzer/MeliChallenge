@@ -7,7 +7,9 @@ data class SearchResponseModel(
     val query: String,
     val paging: SearchResponsePaging,
     val results: List<SearchResult>,
-    val priceFilter: ResultFilter?
+    val priceFilter: ResultFilter?,
+    val sort: SortOption,
+    val availableSorts: List<SortOption>
 )
 
 data class SearchResult(
@@ -37,4 +39,9 @@ data class FilterValue(
     val id: String,
     val name: String,
     val results: Int
+)
+
+data class SortOption(
+    val id: String,
+    val name: String
 )

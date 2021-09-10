@@ -16,14 +16,8 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.melichallenge.R
 import com.example.melichallenge.databinding.FragmentSearchBinding
-import com.example.melichallenge.search.model.SearchResponseModel
 import com.example.melichallenge.search.model.SearchResult
 import org.koin.android.ext.android.inject
-
-enum class SortFilters {
-    LOWER_PRICE,
-    HIGHER_PRICE
-}
 
 class SearchFragment : Fragment(), ResultsClickListener {
 
@@ -50,18 +44,6 @@ class SearchFragment : Fragment(), ResultsClickListener {
         super.onSaveInstanceState(savedState)
     }
 
-    private fun setupFilters() {
-        binding.sortSpinner.apply {
-            adapter = ArrayAdapter.createFromResource(context, R.array.sort_options, R.layout.support_simple_spinner_dropdown_item)
-            onItemSelectedListener = object: AdapterView.OnItemSelectedListener {
-                override fun onItemSelected(p0: AdapterView<*>?, p1: View?, position: Int, p3: Long) {
-                    viewModel.setSelectedSort(position)
-                }
-                override fun onNothingSelected(p0: AdapterView<*>?) {}
-            }
-        }
-    }
-
     private fun setupSearchView() {
         val searchManager = activity?.getSystemService(Context.SEARCH_SERVICE) as SearchManager
         val componentName = ComponentName(requireContext(), SearchActivity::class.java)
@@ -82,7 +64,6 @@ class SearchFragment : Fragment(), ResultsClickListener {
         super.onViewCreated(view, savedInstanceState)
         observeState()
         setupSearchView()
-        setupFilters()
         setupResultsList()
     }
 
@@ -94,43 +75,49 @@ class SearchFragment : Fragment(), ResultsClickListener {
     }
 
     private fun observeState() {
-        observeSearchResult()
+        observePriceFilter()
+        observeSort()
         observeResults()
-        observeSelectedSort()
+    }
+
+    private fun observeSort() {
+        viewModel.sortOptions.observe(viewLifecycleOwner) {
+            binding.sortSpinner.apply {
+                setSelection(0, false)
+                adapter = ArrayAdapter(context, R.layout.support_simple_spinner_dropdown_item, it)
+                onItemSelectedListener = object: AdapterView.OnItemSelectedListener {
+                    override fun onItemSelected(p0: AdapterView<*>?, p1: View?, position: Int, p3: Long) {
+                        viewModel.setSelectedSort(position)
+                    }
+                    override fun onNothingSelected(p0: AdapterView<*>?) {}
+                }
+            }
+        }
+    }
+
+    private fun observePriceFilter() {
+        viewModel.filterOptions.observe(viewLifecycleOwner) {
+            if(it.isNotEmpty()) {
+                binding.priceFilterSpinner.apply {
+                    setSelection(0, false)
+                    adapter = ArrayAdapter(context, R.layout.support_simple_spinner_dropdown_item, it)
+                    onItemSelectedListener = object: AdapterView.OnItemSelectedListener {
+                        override fun onItemSelected(p0: AdapterView<*>?, p1: View?, position: Int, p3: Long) {
+                            viewModel.filterBy(position)
+                        }
+
+                        override fun onNothingSelected(p0: AdapterView<*>?) {}
+                    }
+                }
+            } else {
+                binding.priceFilterSpinner.visibility = View.GONE
+            }
+        }
     }
 
     private fun observeResults() {
         viewModel.results.observe(viewLifecycleOwner) {
             resultsAdapter.setResults(it)
-        }
-    }
-
-    private fun observeSelectedSort() {
-        viewModel.selectedSort.observe(viewLifecycleOwner) {
-            binding.sortSpinner.setSelection(it.ordinal,false)
-        }
-    }
-
-    private fun observeSearchResult() {
-        viewModel.searchResult.observe(viewLifecycleOwner) {
-            setPriceFilter(it)
-        }
-    }
-
-    private fun setPriceFilter(searchResponse: SearchResponseModel) {
-        if(searchResponse.priceFilter != null) {
-            binding.priceFilterSpinner.apply {
-                adapter = ArrayAdapter(context, R.layout.support_simple_spinner_dropdown_item, searchResponse.priceFilter.values.map { it.name })
-                onItemSelectedListener = object: AdapterView.OnItemSelectedListener {
-                    override fun onItemSelected(p0: AdapterView<*>?, p1: View?, position: Int, p3: Long) {
-                        viewModel.filterBy(position)
-                    }
-
-                    override fun onNothingSelected(p0: AdapterView<*>?) {}
-                }
-            }
-        } else {
-            binding.priceFilterSpinner.visibility = View.GONE
         }
     }
 

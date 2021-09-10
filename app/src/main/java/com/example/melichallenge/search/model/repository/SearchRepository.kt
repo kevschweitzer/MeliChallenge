@@ -15,6 +15,6 @@ internal class SearchRepositoryImpl(
 ): SearchRepository {
 
     override suspend fun searchByKeyword(keyword: String, filterOptions: FilterOptions) = withContext(Dispatchers.IO) {
-        searchService.searchByKeyword(keyword, filterOptions.priceFilterValue).toSearchResponseModel()
+        searchService.searchByKeyword(keyword, filterOptions.priceFilterValue, filterOptions.sortValue).toSearchResponseModel()
     }
 }
