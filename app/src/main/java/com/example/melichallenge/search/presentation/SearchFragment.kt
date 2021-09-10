@@ -25,6 +25,9 @@ class SearchFragment : Fragment(), ResultsClickListener {
     private val binding get() = _binding!!
     private val resultsAdapter = ResultsAdapter(this)
     private val viewModel: SearchViewModel by inject()
+
+    //Flags to check if spinners are triggering because of initialization or by user interaction
+    //Only working solution I found out there
     private var priceFilterSetUp: Boolean = false
     private var sortSelectionSetUp: Boolean = false
 
