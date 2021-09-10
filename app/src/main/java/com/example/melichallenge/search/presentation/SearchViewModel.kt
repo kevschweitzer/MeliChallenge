@@ -53,6 +53,10 @@ class SearchViewModelImpl(
                 _selectedSort.value = SortFilters.LOWER_PRICE
             }
         }
+        refreshResults()
+    }
+
+    private fun refreshResults() {
         _searchResult.value?.let {
             _searchResult.value = sort(it)
         }

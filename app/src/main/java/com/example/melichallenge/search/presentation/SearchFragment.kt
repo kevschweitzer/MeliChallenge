@@ -31,14 +31,15 @@ class SearchFragment : Fragment(), ResultsClickListener {
     private val resultsAdapter by lazy { ResultsAdapter(requireContext(),this) }
     private val viewModel: SearchViewModel by inject()
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        getSearchQuery()
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         _binding = DataBindingUtil.inflate(inflater, R.layout.fragment_search, container, false)
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
-        setupSearchView()
-        setupFilters()
-        observeState()
-        getSearchQuery()
         viewModel.restoreState(savedInstanceState)
         return binding.root
     }
@@ -78,6 +79,13 @@ class SearchFragment : Fragment(), ResultsClickListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setupSearchView()
+        setupFilters()
+        observeState()
+        setupResultsList()
+    }
+
+    private fun setupResultsList() {
         binding.searchResults.apply {
             adapter = resultsAdapter
             layoutManager = LinearLayoutManager(context)
