@@ -34,13 +34,13 @@ class SearchFragment : Fragment(), ResultsClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         getSearchQuery()
+        viewModel.restoreState(savedInstanceState)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         _binding = DataBindingUtil.inflate(inflater, R.layout.fragment_search, container, false)
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
-        viewModel.restoreState(savedInstanceState)
         return binding.root
     }
 
@@ -79,9 +79,9 @@ class SearchFragment : Fragment(), ResultsClickListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        observeState()
         setupSearchView()
         setupFilters()
-        observeState()
         setupResultsList()
     }
 
