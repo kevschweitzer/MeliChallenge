@@ -9,5 +9,6 @@
     <string name="sold_quantity_text">Cantidad Vendida: %1$s</string>
     <string name="available_quantity_text">Cantidad Disponible: %1$s</string>
     <string name="price_text">$ %1$s</string>
+    <string name="search_error_text">Error al realizar la búsqueda</string>
 
 </resources>

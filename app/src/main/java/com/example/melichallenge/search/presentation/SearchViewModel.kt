@@ -29,7 +29,7 @@ abstract class SearchViewModel: ViewModel() {
     abstract fun filterBy(position: Int)
 }
 
-class SearchViewModelImpl(
+internal class SearchViewModelImpl(
     private val searchRepository: SearchRepository
 ): SearchViewModel() {
 
