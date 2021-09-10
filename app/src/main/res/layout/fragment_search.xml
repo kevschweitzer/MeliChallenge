@@ -42,22 +42,41 @@
         android:visibility="@{viewModel.filtersVisibility ? View.VISIBLE : View.GONE}"
         app:layout_constraintTop_toBottomOf="@id/search_view" >
 
+        <TextView
+            android:id="@+id/sort_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/sort_by_text"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"/>
+
         <Spinner
             android:id="@+id/sort_spinner"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/price_filter_spinner"
+            android:layout_marginStart="@dimen/small_margin"
+            app:layout_constraintTop_toTopOf="@id/sort_text"
+            app:layout_constraintBottom_toBottomOf="@id/sort_text"
+            app:layout_constraintStart_toEndOf="@id/sort_text"/>
+
+        <TextView
+            android:id="@+id/price_filter_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/medium_margin"
+            android:text="@string/price_range_filter_text"
+            app:layout_constraintTop_toBottomOf="@id/sort_text"
             app:layout_constraintStart_toStartOf="parent"/>
 
         <Spinner
             android:id="@+id/price_filter_spinner"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/small_margin"
+            android:layout_marginStart="@dimen/small_margin"
             app:layout_constraintTop_toBottomOf="@id/sort_spinner"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"/>
+            app:layout_constraintTop_toTopOf="@id/price_filter_text"
+            app:layout_constraintBottom_toBottomOf="@id/price_filter_text"
+            app:layout_constraintStart_toEndOf="@id/price_filter_text"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.recyclerview.widget.RecyclerView

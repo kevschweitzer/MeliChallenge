@@ -3,4 +3,6 @@
     <string name="search_fragment_label">Buscar</string>
     <string name="query_hint">¿Qué estás buscando?</string>
     <string name="search_text">Buscar</string>
+    <string name="sort_by_text">Ordenar por</string>
+    <string name="price_range_filter_text">Rango de precio</string>
 </resources>

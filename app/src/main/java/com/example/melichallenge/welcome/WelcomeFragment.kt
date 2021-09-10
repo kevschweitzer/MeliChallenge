@@ -25,11 +25,14 @@ class WelcomeFragment : Fragment() {
 
     private fun initListeners() {
         binding.searchButton.setOnClickListener {
-           with(Intent(context, SearchActivity::class.java)) {
-               action = Intent.ACTION_SEARCH
-               putExtra(SearchManager.QUERY, binding.searchEditText.text.toString())
-               startActivity(this)
-           }
+            val query = binding.searchEditText.text.toString()
+            if(query.isNotEmpty() && query.isNotBlank()) {
+                with(Intent(context, SearchActivity::class.java)) {
+                    action = Intent.ACTION_SEARCH
+                    putExtra(SearchManager.QUERY, query)
+                    startActivity(this)
+                }
+            }
         }
     }
 
