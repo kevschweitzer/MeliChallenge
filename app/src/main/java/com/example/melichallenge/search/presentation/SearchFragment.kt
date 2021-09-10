@@ -25,6 +25,8 @@ class SearchFragment : Fragment(), ResultsClickListener {
     private val binding get() = _binding!!
     private val resultsAdapter = ResultsAdapter(this)
     private val viewModel: SearchViewModel by inject()
+    private var priceFilterSetUp: Boolean = false
+    private var sortSelectionSetUp: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -83,11 +85,11 @@ class SearchFragment : Fragment(), ResultsClickListener {
     private fun observeSort() {
         viewModel.sortOptions.observe(viewLifecycleOwner) {
             binding.sortSpinner.apply {
-                setSelection(0, false)
+                setSelection(viewModel.selectedSortPosition, false)
                 adapter = ArrayAdapter(context, R.layout.support_simple_spinner_dropdown_item, it)
                 onItemSelectedListener = object: AdapterView.OnItemSelectedListener {
                     override fun onItemSelected(p0: AdapterView<*>?, p1: View?, position: Int, p3: Long) {
-                        viewModel.setSelectedSort(position)
+                        if(sortSelectionSetUp) viewModel.setSelectedSort(position) else sortSelectionSetUp = true
                     }
                     override fun onNothingSelected(p0: AdapterView<*>?) {}
                 }
@@ -99,11 +101,11 @@ class SearchFragment : Fragment(), ResultsClickListener {
         viewModel.filterOptions.observe(viewLifecycleOwner) {
             if(it.isNotEmpty()) {
                 binding.priceFilterSpinner.apply {
-                    setSelection(0, false)
+                    setSelection(viewModel.selectedPriceFilterPosition, false)
                     adapter = ArrayAdapter(context, R.layout.support_simple_spinner_dropdown_item, it)
                     onItemSelectedListener = object: AdapterView.OnItemSelectedListener {
                         override fun onItemSelected(p0: AdapterView<*>?, p1: View?, position: Int, p3: Long) {
-                            viewModel.filterBy(position)
+                            if(priceFilterSetUp) viewModel.filterBy(position) else priceFilterSetUp = true
                         }
 
                         override fun onNothingSelected(p0: AdapterView<*>?) {}
@@ -119,6 +121,13 @@ class SearchFragment : Fragment(), ResultsClickListener {
         viewModel.results.observe(viewLifecycleOwner) {
             resultsAdapter.setResults(it)
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+        priceFilterSetUp = false
+        sortSelectionSetUp = false
     }
 
     override fun onItemClicked(product: SearchResult) {

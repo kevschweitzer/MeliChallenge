@@ -18,6 +18,8 @@ abstract class SearchViewModel: ViewModel() {
     abstract val filterOptions: LiveData<List<String>>
     abstract val sortOptions: LiveData<List<String>>
     abstract val results: LiveData<List<SearchResult>>
+    abstract var selectedSortPosition: Int
+    abstract var selectedPriceFilterPosition: Int
     abstract fun search(query: String)
     abstract fun setSelectedSort(position: Int)
     abstract fun onToggleFilterClicked()
@@ -52,6 +54,8 @@ class SearchViewModelImpl(
 
     private val _results = MutableLiveData<List<SearchResult>>()
     override val results: LiveData<List<SearchResult>> get() = _results
+    override var selectedSortPosition: Int = 0
+    override var selectedPriceFilterPosition: Int = 0
 
     //private var _selectedSort = MutableLiveData(SortFilters.LOWER_PRICE)
     //override val selectedSort: LiveData<SortFilters> get() = _selectedSort
@@ -76,6 +80,7 @@ class SearchViewModelImpl(
     }
 
     override fun setSelectedSort(position: Int) {
+        selectedSortPosition = position
         selectedFilters.sortValue = _sortOptions.value?.get(position)?.id ?: ""
         refreshQuery()
     }
@@ -97,6 +102,7 @@ class SearchViewModelImpl(
     }
 
     override fun filterBy(position: Int) {
+        selectedPriceFilterPosition = position
         selectedFilters.priceFilterValue =_filterOptions.value?.get(position)?.id ?: ""
         refreshQuery()
     }
