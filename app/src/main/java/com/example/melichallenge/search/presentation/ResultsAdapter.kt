@@ -54,7 +54,7 @@ class ResultsAdapter(
         }
 
         private fun setThumbnail(item: SearchResult) {
-            Picasso.get().load(item.thumbnailUrl).into(binding.thumbnail);
+            Picasso.get().load(item.thumbnailUrl).into(binding.thumbnail)
         }
     }
 }

@@ -22,22 +22,30 @@
         <ImageView
             android:id="@+id/thumbnail"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/guideline"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"/>
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.20"
+            app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
             android:id="@+id/title"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="@{result.title}"
+            style="@style/ListProductTitle"
             android:layout_marginStart="@dimen/medium_margin"
-            android:textStyle="bold"
             android:layout_marginEnd="@dimen/medium_margin"
-            app:layout_constraintStart_toEndOf="@id/thumbnail"
+            app:layout_constraintStart_toEndOf="@id/guideline"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/price"
             tools:text="Title"/>
 
