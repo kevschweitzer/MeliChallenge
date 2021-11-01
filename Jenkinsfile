@@ -3,7 +3,7 @@ pipeline {
     stages {
         stage('build') {
             steps {
-                sh 'kotlin --version'
+                sh 'echo "Hello World"'
             }
         }
     }
